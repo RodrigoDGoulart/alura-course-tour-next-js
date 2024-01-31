@@ -1,21 +1,19 @@
 import NextLink from "next/link";
 import { Box, Text } from "@skynexui/components";
 import { useRouter } from "next/router";
-import dados from "../../dados.json";
 
-// dica dos paths estáticos
 export async function getStaticPaths() {
-  // const paths = [
-  //   { params: { id: '1' } },
-  //   { params: { id: '2' } },
-  //   { params: { id: '3' } }
-  // ]
-  const paths = dados.posts.map((postAtual) => ({
+  // URL informada da aula não está funcionando, foi usado PokeAPI para estudo
+  // const API_URL = "https://fakeapi-omariosouto.verce.app/api/posts";
+  const API_URL = "https://pokeapi.co/api/v2/pokemon-species";
+  const DADOS_API = await fetch(API_URL).then((res) => res.json());
+
+  console.log(DADOS_API);
+  const paths = DADOS_API.results.map((item, index) => ({
     params: {
-      id: `${postAtual.id}`,
+      id: `${index + 1}`,
     },
   }));
-  console.log("dados:", dados);
   console.log("paths:", paths);
 
   return {
@@ -28,14 +26,22 @@ export async function getStaticProps(context) {
   console.log("Contexto", context.params.id);
   const id = context.params.id;
 
-  const post = dados.posts.find((currentPost) => currentPost.id === id);
+  const API_URL = `https://pokeapi.co/api/v2/pokemon-species/${id}/`;
+  // const post = dados.posts.find((currentPost) => currentPost.id === id);
+  const pokemon = await fetch(API_URL).then((res) => res.json());
 
   return {
     props: {
-      id: post.id,
-      title: post.title,
-      date: post.date,
-      content: post.content,
+      id: id,
+      title: pokemon.name,
+      date: new Date().toLocaleDateString("pt-BR"),
+      content: [
+        ...new Set(
+          pokemon.flavor_text_entries
+            .filter((item) => item.language.name === "en")
+            .map((item) => item.flavor_text)
+        ),
+      ].join(" "),
     },
   };
 }
