@@ -8,23 +8,21 @@ export async function getStaticPaths() {
   const API_URL = "https://pokeapi.co/api/v2/pokemon-species";
   const DADOS_API = await fetch(API_URL).then((res) => res.json());
 
-  console.log(DADOS_API);
   const paths = DADOS_API.results.map((item, index) => ({
     params: {
       id: `${index + 1}`,
     },
   }));
-  console.log("paths:", paths);
 
   return {
-    paths: paths,
-    fallback: false, // false or 'blocking'
+    paths: [],
+    fallback: "blocking", // false or 'blocking'
   };
 }
 
 export async function getStaticProps(context) {
-  console.log("Contexto", context.params.id);
   const id = context.params.id;
+  console.log('gerou', id);
 
   const API_URL = `https://pokeapi.co/api/v2/pokemon-species/${id}/`;
   // const post = dados.posts.find((currentPost) => currentPost.id === id);
