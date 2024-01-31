@@ -1,6 +1,7 @@
 function MyApp({ Component, pageProps }) {
+  console.log("renderização _app.tsx");
   return (
-    <> 
+    <>
       <style>{`
         * {
           font-family: sans-serif; 
@@ -8,7 +9,7 @@ function MyApp({ Component, pageProps }) {
       `}</style>
       <Component {...pageProps} />
     </>
-  )
+  );
 }
 
 export default MyApp;

@@ -1,25 +1,24 @@
-import Link from 'next/link'
+import Link from "next/link";
 
-// export async function getStaticProps() {
-//   return {
-//     props: {}
-//   }
-// }
-
-export async function getServerSideProps() {
+export async function getStaticProps() {
   return {
     props: {}
   }
 }
 
+// export async function getServerSideProps() {
+//   return {
+//     props: {},
+//   };
+// }
 
 function HomePage() {
+  console.log("renderização index.tsx");
+
   return (
     <div>
       Welcome to Next.js!
-
       <img src="/images/avatar.png" />
-
       <ul>
         <li>
           <Link href="/sobre">
@@ -28,7 +27,7 @@ function HomePage() {
         </li>
       </ul>
     </div>
-  )
+  );
 }
 
-export default HomePage
+export default HomePage;
