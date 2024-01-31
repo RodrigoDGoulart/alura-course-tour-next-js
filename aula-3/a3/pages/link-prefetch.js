@@ -11,6 +11,8 @@ export default function LinkPrefetchPage() {
           </a>
         </Link>
       </li>
+      {/* prefetch-false - vai pré-carregar a página ao posicionar mouse no link. O padrão é prefecth-true, pré-carregando todas as páginas relacionadas aos links */}
+      {/* talvez afete o desempenho com prefetchs-true */}
       <li>
         <Link href="/sobre" prefetch={false}>
           <a>
