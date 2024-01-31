@@ -14,6 +14,8 @@ export async function getStaticProps() {
         content: `Veja mais sobre o ${poke.name}`
       }))
     },
+    // o next refaz o staticProps a cada x segundos. Muito útil para sites que serão vistos por muitas pessoas, sendo muitas requisições. Invés de ser uma requisição para cada acesso, é feito 1 requisição a cada x segundos
+    revalidate: 10,
   };
 }
 
