@@ -1,13 +1,28 @@
 import NextLink from 'next/link';
 import { Box, Text, Image } from '@skynexui/components';
-import dados from '../dados.json';
 
-export default function HomeScreen() {
+export async function getStaticProps() {
+  const API_URL = `https://pokeapi.co/api/v2/pokemon-species/`;
+  // const post = dados.posts.find((currentPost) => currentPost.id === id);
+  const items = await fetch(API_URL).then((res) => res.json());
+
+  return {
+    props: {
+      posts: items.results.map((poke, index) => ({
+        id: index + 1,
+        title: poke.name,
+        content: `Veja mais sobre o ${poke.name}`
+      }))
+    },
+  };
+}
+
+export default function HomeScreen(props) {
   const infos = {
     nome: 'Mario Souto',
     githubUser: 'omariosouto',
   }
-  const posts = dados.posts;
+  const posts = props.posts;
 
   return (
     <Box
